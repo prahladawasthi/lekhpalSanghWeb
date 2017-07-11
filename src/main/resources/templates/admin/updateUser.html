@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Lekhpal Sangh : Update User</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous" />
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
+<script
+	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script>
+	(function(i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function() {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script',
+			'https://www.google-analytics.com/analytics.js', 'ga');
+
+	ga('create', 'UA-102021176-2', 'auto');
+	ga('send', 'pageview');
+</script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">...</div>
+	<div class="container">
+		<div
+			class="middle-box text-center loginscreen animated fadeInDown col-sm-5 col-sm-offset-3">
+			<br /> <br /> <br />
+			<hr />
+
+			<h4 align="center">Update User</h4>
+			<form action="#" th:action="@{/common/update}" th:object="${user}"
+				method="post" class="form-horizontal" data-toggle="validator">
+
+				<div th:if="${message}" class="alert alert-success" role="alert"
+					th:text=${message}></div>
+
+				<input type="hidden" name="id" th:value="${user.id}" />
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-user"></span>
+					</span> <input type="text" th:field="*{firstName}"
+						placeholder="First Name" class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('firstName')}"
+					th:errors="*{firstName}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-user"></span>
+					</span> <input type="text" th:field="*{lastName}" placeholder="Last Name"
+						class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('lastName')}"
+					th:errors="*{lastName}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-envelope"></span>
+					</span> <input type="email" th:field="*{email}" placeholder="Email"
+						class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-phone"></span>
+					</span> <input type="number" th:field="*{mobile}"
+						placeholder="Mobile Number" class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-phone"></span>
+					</span> <input type="number" th:field="*{alternateMobile}"
+						placeholder="Alternate Mobile Number" class="form-control"
+						required /> <span class="glyphicon form-control-feedback"
+						aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('alternateMobile')}"
+					th:errors="*{alternateMobile}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-phone"></span>
+					</span> <input type="number" th:field="*{emergencyContact}"
+						placeholder="Emergency Contact Number" class="form-control"
+						required /> <span class="glyphicon form-control-feedback"
+						aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('emergencyContact')}"
+					th:errors="*{emergencyContact}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-tags"></span>
+					</span> <input type="text" th:field="*{parkingNumber}"
+						placeholder="Parking Number" class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('parkingNumber')}"
+					th:errors="*{parkingNumber}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-tags"></span>
+					</span> <input type="text" th:field="*{vehicleType}"
+						placeholder="Vehicle Type" class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('parkingNumber')}"
+					th:errors="*{vehicleType}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-tags"></span>
+					</span> <input type="text" th:field="*{vehicleNumber}"
+						placeholder="Vehicle Number" class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('vehicleNumber')}"
+					th:errors="*{vehicleNumber}"
+					class="validation-message alert alert-danger" role="alert"></div>
+					
+					<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-home"></span>
+					</span> <input type="text" th:field="*{builder}"
+						placeholder="Builder" class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('builder')}"
+					th:errors="*{builder}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-tower"></span>
+					</span> <input type="text" th:field="*{tower}" placeholder="Tower"
+						class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('tower')}" th:errors="*{tower}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-home"></span>
+					</span> <input type="number" th:field="*{flatNo}"
+						placeholder="Flat Number" class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('flatNo')}" th:errors="*{flatNo}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+
+				<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="form-group input-group has-feedback" >
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-user"></span>
+					</span> <select selected="*{userRole}" th:field="*{userRole}"
+						class="form-control">
+						<option th:each="userRole : ${userRoles}" th:value="${userRole}"
+							th:text="${userRole}"></option>
+					</select> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+
+				<button type="submit" class="btn btn-primary block full-width m-b">Update</button>
+			</form>
+			<br /> <br />
+			<div th:replace="fragments/footer :: footer">&copy; 2016 Lekhpal Sangh
+				Residents</div>
+		</div>
+	</div>
+	<!-- Bootstrap Validator plugin -->
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+</body>
+</html>

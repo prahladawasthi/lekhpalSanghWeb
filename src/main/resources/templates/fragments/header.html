@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
+<script
+	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		th:fragment="header">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed navbar-right"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<span th:if="${#httpServletRequest.remoteUser} != null"> <a
+					class="navbar-brand"
+					th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+					th:href="@{/admin/}">Hello <span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></a>
+					<a class="navbar-brand"
+					th:if="${#authorization.expression('hasRole(''ROLE_MAINTENANCE'')')}"
+					th:href="@{/maintenance/}">Hello <span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></a>
+					<a class="navbar-brand"
+					th:if="${#authorization.expression('hasRole(''ROLE_RESIDENTS'')')}"
+					th:href="@{/user/}">Hello <span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></a>
+
+				</span> <span th:if="${#httpServletRequest.remoteUser} == null"> <a
+					class="navbar-brand" th:href="@{/}">Hynish</a>
+				</span>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav"
+					th:if="${#authorization.expression('!isAuthenticated()')}">
+
+
+					<li th:classappend="${module == 'register' ? 'active' : ''}"><a
+						href="#" th:href="@{/register}">Register</a></li>
+
+				</ul>
+				<ul class="nav navbar-nav"
+					th:if="${#authorization.expression('isAuthenticated()')}">
+
+					<li th:classappend="${module == 'add' ? 'active' : ''}"><a
+						href="#" th:href="@{/common/profile}">Profile</a></li>
+
+					<!-- Admin Navigation -->
+
+					<li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+						th:classappend="${module == 'add' ? 'active' : ''}"><a
+						href="#" th:href="@{/admin/addUser}">Add User</a></li>
+
+					<li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+						th:classappend="${module == 'user' ? 'active' : ''}"><a
+						href="#" th:href="@{/admin/user}">Users</a></li>
+
+					<li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+						th:classappend="${module == 'feedback' ? 'active' : ''}"><a
+						href="#" th:href="@{/feedback/feedList}">Feedback</a></li>
+					<!-- Maintenance Navigation -->
+
+					<li
+						th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_MAINTENANCE'')'))}"
+						th:classappend="${module == 'staff' ? 'active' : ''}"><a
+						href="#" th:href="@{/maintenance/addStaff}">Add Staff</a></li>
+
+					<li
+						th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_MAINTENANCE'')'))}"
+						th:classappend="${module == 'staff' ? 'active' : ''}"><a
+						href="#" th:href="@{/maintenance/staff}">Staff</a></li>
+
+
+					<!--Residents Navigation -->
+
+					<li
+						th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_RESIDENTS'')'))}"
+						th:classappend="${module == 'req' ? 'active' : ''}"><a
+						href="#" th:href="@{/request/addReq}">Request Service</a></li>
+
+					<li
+						th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_RESIDENTS'')')) or  (#authorization.expression('hasRole(''ROLE_MAINTENANCE'')'))}"
+						th:classappend="${module == 'staff' ? 'active' : ''}"><a
+						href="#" th:href="@{/request/requests}">View Requests</a></li>
+
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right"
+					th:if="${#authorization.expression('!isAuthenticated()')}">
+					<li><a href="/common/login" th:href="@{/common/login}"> <span
+							class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Login
+					</a></li>
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right"
+					th:if="${#authorization.expression('isAuthenticated()')}">
+
+					<!-- 	<li><a href="/common/changePassword"
+						th:href="@{/common/changePassword}"> <span
+							class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Change
+							Password
+					</a></li> -->
+
+					<li><a href="/logout" th:href="@{/logout}"
+						onclick="$('#form').submit();"> <span
+							class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
+					</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<script>
+			(function(i, s, o, g, r, a, m) {
+				i['GoogleAnalyticsObject'] = r;
+				i[r] = i[r] || function() {
+					(i[r].q = i[r].q || []).push(arguments)
+				}, i[r].l = 1 * new Date();
+				a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+				a.async = 1;
+				a.src = g;
+				m.parentNode.insertBefore(a, m)
+			})(window, document, 'script',
+					'https://www.google-analytics.com/analytics.js', 'ga');
+
+			ga('create', 'UA-102021176-2', 'auto');
+			ga('send', 'pageview');
+		</script>
+	</nav>
+</body>
+</html>

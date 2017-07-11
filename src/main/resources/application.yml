@@ -1,0 +1,37 @@
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false
+spring: 
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: netsolutionst@gmail.com
+    password: Sonu@1234
+    protocol: smtp
+    tls: true
+    properties.mail.smtp: 
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
+
+      
+        
+---   
+spring:
+  profiles: dev
+  data:
+    mongodb:
+      database: lekhpal_detail
+      host: localhost
+      port: 27017
+      
+---     
+spring:
+  profiles: prod
+ 
