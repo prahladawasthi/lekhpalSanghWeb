@@ -6,12 +6,12 @@ import com.model.Feedback;
 
 public interface FeedService {
 
-	public void saveFeed(Feedback feedback);
+	 void saveFeed(Feedback feedback);
 
-	public Feedback deleteFeedById(String id);
+	 Feedback deleteFeedById(String id);
 
-	public List<Feedback> findAllFeeds();
+	 List<Feedback> findAllFeeds();
 
-	public Feedback findByID(String id);
+	 Feedback findByID(String id);
 
 }

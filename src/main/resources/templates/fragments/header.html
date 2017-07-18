@@ -1,138 +1,201 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
-<script
-	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
-<script
-	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <script
+            th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
+    <script
+            th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top"
-		th:fragment="header">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed navbar-right"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<span th:if="${#httpServletRequest.remoteUser} != null"> <a
-					class="navbar-brand"
-					th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-					th:href="@{/admin/}">Hello <span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></a>
+<nav class="navbar navbar-inverse navbar-fixed-top"
+     th:fragment="header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed navbar-right"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <span th:if="${#httpServletRequest.remoteUser} != null"> <a
+                    class="navbar-brand"
+                    th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                    th:href="@{/admin/}">Hello <span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></a>
 					<a class="navbar-brand"
-					th:if="${#authorization.expression('hasRole(''ROLE_MAINTENANCE'')')}"
-					th:href="@{/maintenance/}">Hello <span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></a>
+                       th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"
+                       th:href="@{/user/}">Hello <span
+                            th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></a>
 					<a class="navbar-brand"
-					th:if="${#authorization.expression('hasRole(''ROLE_RESIDENTS'')')}"
-					th:href="@{/user/}">Hello <span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></a>
+                       th:if="${#authorization.expression('hasRole(''ROLE_LEKHPAL'')')}"
+                       th:href="@{/lekhpal/}">Hello <span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></a>
 
 				</span> <span th:if="${#httpServletRequest.remoteUser} == null"> <a
-					class="navbar-brand" th:href="@{/}">Hynish</a>
+                class="navbar-brand" th:href="@{/}">Lekhpal Sangh</a>
 				</span>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav"
-					th:if="${#authorization.expression('!isAuthenticated()')}">
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav"
+                th:if="${#authorization.expression('!isAuthenticated()')}">
 
 
-					<li th:classappend="${module == 'register' ? 'active' : ''}"><a
-						href="#" th:href="@{/register}">Register</a></li>
+                <li th:classappend="${module == 'register' ? 'active' : ''}"><a
+                        href="#" th:href="@{/register}">Register</a></li>
 
-				</ul>
-				<ul class="nav navbar-nav"
-					th:if="${#authorization.expression('isAuthenticated()')}">
+            </ul>
 
-					<li th:classappend="${module == 'add' ? 'active' : ''}"><a
-						href="#" th:href="@{/common/profile}">Profile</a></li>
+            <ul class="nav navbar-nav"
+                th:if="${#authorization.expression('isAuthenticated()')}">
 
-					<!-- Admin Navigation -->
+                <li th:classappend="${module == 'add' ? 'active' : ''}"><a
+                        href="#" th:href="@{/common/profile}">Profile</a></li>
 
-					<li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-						th:classappend="${module == 'add' ? 'active' : ''}"><a
-						href="#" th:href="@{/admin/addUser}">Add User</a></li>
+                <!-- Admin Navigation -->
+                <li class="dropdown" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Users<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
 
-					<li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-						th:classappend="${module == 'user' ? 'active' : ''}"><a
-						href="#" th:href="@{/admin/user}">Users</a></li>
+                        <li th:classappend="${module == 'add' ? 'active' : ''}"><a
+                                href="#" th:href="@{/admin/addUser}">Add User</a></li>
 
-					<li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-						th:classappend="${module == 'feedback' ? 'active' : ''}"><a
-						href="#" th:href="@{/feedback/feedList}">Feedback</a></li>
-					<!-- Maintenance Navigation -->
+                        <li th:classappend="${module == 'user' ? 'active' : ''}"><a
+                                href="#" th:href="@{/admin/user}">Users</a></li>
 
-					<li
-						th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_MAINTENANCE'')'))}"
-						th:classappend="${module == 'staff' ? 'active' : ''}"><a
-						href="#" th:href="@{/maintenance/addStaff}">Add Staff</a></li>
+                    </ul>
+                </li>
 
-					<li
-						th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_MAINTENANCE'')'))}"
-						th:classappend="${module == 'staff' ? 'active' : ''}"><a
-						href="#" th:href="@{/maintenance/staff}">Staff</a></li>
+                <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                    th:classappend="${module == 'feedback' ? 'active' : ''}"><a
+                        href="#" th:href="@{/feedback/feedList}">Feedback</a></li>
+
+                <!-- Mandal Navigation -->
+                <li class="dropdown"
+                    th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))  or (#authorization.expression('hasRole(''ROLE_LEKHPAL'')'))}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Mandal<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+
+                        <li th:classappend="${module == 'mandal' ? 'active' : ''}"><a
+                                href="#" th:href="@{/mandal/addMandal}">Add Mandal</a></li>
+
+                        <li th:classappend="${module == 'mandal' ? 'active' : ''}"><a
+                                href="#" th:href="@{/mandal/}">Mandal</a></li>
+
+                    </ul>
+                </li>
+                <!-- District Navigation -->
+                <li class="dropdown"
+                    th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))  or (#authorization.expression('hasRole(''ROLE_LEKHPAL'')'))}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">District<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+
+                        <li th:classappend="${module == 'district' ? 'active' : ''}"><a
+                                href="#" th:href="@{/district/addDistrict}">Add District</a></li>
+
+                        <li th:classappend="${module == 'district' ? 'active' : ''}"><a
+                                href="#" th:href="@{/district/}">Districts</a></li>
+
+                    </ul>
+                </li>
+                <!-- Tahsil Navigation -->
+                <li class="dropdown"
+                    th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))  or (#authorization.expression('hasRole(''ROLE_LEKHPAL'')'))}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Tahsil<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+
+                        <li th:classappend="${module == 'staff' ? 'active' : ''}"><a
+                                href="#" th:href="@{/tahsil/addTahsil}">Add Tahshil</a></li>
+
+                        <li th:classappend="${module == 'staff' ? 'active' : ''}"><a
+                                href="#" th:href="@{/tahsil/}">Tahsil</a></li>
+
+                    </ul>
+                </li>
 
 
-					<!--Residents Navigation -->
+                <!--Residents Navigation -->
+                <!--                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">Service Request<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li
+                                                th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_RESIDENTS'')'))}"
+                                                th:classappend="${module == 'req' ? 'active' : ''}"><a
+                                                href="#" th:href="@{/request/addReq}">Request Service</a></li>
 
-					<li
-						th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_RESIDENTS'')'))}"
-						th:classappend="${module == 'req' ? 'active' : ''}"><a
-						href="#" th:href="@{/request/addReq}">Request Service</a></li>
+                                        <li
+                                                th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_RESIDENTS'')')) or  (#authorization.expression('hasRole(''ROLE_MAINTENANCE'')'))}"
+                                                th:classappend="${module == 'staff' ? 'active' : ''}"><a
+                                                href="#" th:href="@{/request/requests}">View Requests</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav">
 
-					<li
-						th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_RESIDENTS'')')) or  (#authorization.expression('hasRole(''ROLE_MAINTENANCE'')'))}"
-						th:classappend="${module == 'staff' ? 'active' : ''}"><a
-						href="#" th:href="@{/request/requests}">View Requests</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">Report Issue <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
 
+                                        <li th:classappend="${module == 'bug' ? 'active' : ''}"><a
+                                                href="#" th:href="@{/bug/}">Report Issue</a></li>
+                                        <li th:classappend="${module == 'bug' ? 'active' : ''}"><a
+                                                href="#" th:href="@{/bug/bugList}">Reported Issues</a></li>
 
-				</ul>
-				<ul class="nav navbar-nav navbar-right"
-					th:if="${#authorization.expression('!isAuthenticated()')}">
-					<li><a href="/common/login" th:href="@{/common/login}"> <span
-							class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Login
-					</a></li>
+                                        &lt;!&ndash;<li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">One more separated link</a></li>&ndash;&gt;
+                                    </ul>
+                                </li> -->
+                            </ul>
 
-				</ul>
-				<ul class="nav navbar-nav navbar-right"
-					th:if="${#authorization.expression('isAuthenticated()')}">
+                <ul class="nav navbar-nav navbar-right"
+                    th:if="${#authorization.expression('!isAuthenticated()')}">
+                    <li><a href="/common/login" th:href="@{/common/login}"> <span
+                            class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Login
+                    </a></li>
 
-					<!-- 	<li><a href="/common/changePassword"
-						th:href="@{/common/changePassword}"> <span
-							class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Change
-							Password
-					</a></li> -->
+                </ul>
+                <ul class="nav navbar-nav navbar-right"
+                    th:if="${#authorization.expression('isAuthenticated()')}">
 
-					<li><a href="/logout" th:href="@{/logout}"
-						onclick="$('#form').submit();"> <span
-							class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
-					</a></li>
+                    <li><a href="/logout" th:href="@{/logout}"
+                           onclick="$('#form').submit();"> <span
+                            class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
+                    </a></li>
 
-				</ul>
-			</div>
-		</div>
-		<script>
-			(function(i, s, o, g, r, a, m) {
-				i['GoogleAnalyticsObject'] = r;
-				i[r] = i[r] || function() {
-					(i[r].q = i[r].q || []).push(arguments)
-				}, i[r].l = 1 * new Date();
-				a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-				a.async = 1;
-				a.src = g;
-				m.parentNode.insertBefore(a, m)
-			})(window, document, 'script',
-					'https://www.google-analytics.com/analytics.js', 'ga');
+                </ul>
+            </div>
+    </div>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-			ga('create', 'UA-102021176-2', 'auto');
-			ga('send', 'pageview');
-		</script>
-	</nav>
+        ga('create', 'UA-102021176-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</nav>
 </body>
 </html>

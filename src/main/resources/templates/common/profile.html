@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<title>Lekhpal Sangh : Profile</title>
+<title>Profile</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -11,20 +11,14 @@
 <script
 	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 <script>
-	(function(i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function() {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
-		m.parentNode.insertBefore(a, m)
-	})(window, document, 'script',
-			'https://www.google-analytics.com/analytics.js', 'ga');
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-	ga('create', 'UA-102021176-2', 'auto');
-	ga('send', 'pageview');
+    ga('create', 'UA-102021176-1', 'auto');
+    ga('send', 'pageview');
+
 </script>
 </head>
 <body>
@@ -39,7 +33,7 @@
 
 		<div
 			class="middle-box text-center loginscreen animated fadeInDown col-sm-4 col-sm-offset-4">
-			<span> Welcome to Lekhpal Sangh</span> <br /> <br />
+			<span> Welcome to lekhpal Sangh</span> <br /> <br />
 
 			<div th:if="${successMessage}" class="alert alert-success"
 				role="alert" th:text=${successMessage}></div>
@@ -56,7 +50,7 @@
 					</tr>
 					<tr>
 						<td>Name</td>
-						<td th:text="${user.firstName}+ ' ' + ${user.firstName}"></td>
+						<td th:text="${user.firstName}+ ' ' + ${user.lastName}"></td>
 					</tr>
 					<tr>
 						<td>Mobile Number</td>
@@ -70,31 +64,23 @@
 						<td>Emergency Contact</td>
 						<td th:text="${user.emergencyContact}"></td>
 					</tr>
-					<tr>
-						<td>Parking Number</td>
-						<td th:text="${user.parkingNumber}"></td>
-					</tr>
-					<tr>
-						<td>Vehicle Type</td>
-						<td th:text="${user.vehicleType}"></td>
-					</tr>
-					<tr>
-						<td>Vehicle Number</td>
-						<td th:text="${user.vehicleNumber}"></td>
-					</tr>
-					<tr>
-						<td>Builder</td>
-						<td th:text="${user.builder}"></td>
-					</tr>
-					<tr>
-						<td>Tower</td>
-						<td th:text="${user.tower}"></td>
-					</tr>
-					<tr>
-						<td>Flat Number</td>
-						<td th:text="${user.flatNo}"></td>
-					</tr>
 
+					<tr>
+						<td>Mandal Name</td>
+						<td th:text="${mandalName}"></td>
+					</tr>
+					<tr>
+						<td>District Nme</td>
+						<td th:text="${districtName}"></td>
+					</tr>
+					<tr>
+						<td>Tahsil Name</td>
+						<td th:text="${tahsilName}"></td>
+					</tr>
+					<tr>
+						<td>Area</td>
+						<td th:text="${user.areaAppointedAt}"></td>
+					</tr>
 					<tr>
 						<td align="center">
 							<form class="form-inline" th:action="@{/common/update}"

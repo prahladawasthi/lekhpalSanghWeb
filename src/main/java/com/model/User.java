@@ -1,186 +1,203 @@
 package com.model;
 
-import java.util.Collection;
-import java.util.List;
-
-import javax.validation.constraints.Size;
-
-import org.bson.types.ObjectId;
-import org.hibernate.validator.constraints.Email;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Document(collection = "user")
-public class User implements UserDetails {
+public class User {
 
-	private static final long serialVersionUID = 2153429190822687605L;
+    @Id
+    private String id;
 
-	@Id
-	ObjectId databaseId;
-	private int id;
+    @Field
+    @Size(min = 3, max = 30)
+    private String email;
 
-	@Field
-	@Email
-	private String email;
+    @Field
+    private String password;
 
-	@Field
-	private String password;
+    @Field
+    @Size(min = 3, max = 30)
+    private String firstName;
 
-	private List<GrantedAuthority> grantedAuthorities;
-	
-	@Field
-	@Size(min = 3, max = 30)
-	private String firstName;
+    @Field
+    @Size(min = 3, max = 30)
+    private String lastName;
 
-	@Field
-	@Size(min = 3, max = 30)
-	private String lastName;
+    @Field
+    private String mandalID;
+    @Field
+    private String districtID;
+    @Field
+    private String tahsilID;
+    @Field
+    private String areaAppointedAt;
+    @Field
+    @Size(min = 10, max = 10)
+    private String mobile;
+    @Field
+    private String alternateMobile;
+    @Field
+    private String emergencyContact;
+    @Field
+    private String enabled;
+    @Field
+    private String confirmationToken;
+    @Field
+    private Date createdOn;
+    @Field
+    private Date lastLogin;
+    @Field
+    private String resetToken;
+    @Field
+    private String userRole;
 
-	@Field
-	@Size(min = 10, max = 10)
-	private String mobile;
+    public String getMandalID() {
+        return mandalID;
+    }
 
-	@Field
-	private String confirmationToken;
+    public void setMandalID(String mandalID) {
+        this.mandalID = mandalID;
+    }
 
-	@Field
-	private String resetToken;
+    public String getDistrictID() {
+        return districtID;
+    }
 
-	@Field
-	private String userRole;
+    public void setDistrictID(String districtID) {
+        this.districtID = districtID;
+    }
 
-	@Field
-	private boolean enabled;
+    public String getTahsilID() {
+        return tahsilID;
+    }
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return grantedAuthorities;
-	}
+    public void setTahsilID(String tahsilID) {
+        this.tahsilID = tahsilID;
+    }
 
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getAreaAppointedAt() {
+        return areaAppointedAt;
+    }
 
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void setAreaAppointedAt(String areaAppointedAt) {
+        this.areaAppointedAt = areaAppointedAt;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public String getId() {
+        return id;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public ObjectId getDatabaseId() {
-		return databaseId;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setDatabaseId(ObjectId databaseId) {
-		this.databaseId = databaseId;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getMobile() {
+        return mobile;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getAlternateMobile() {
+        return alternateMobile;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setAlternateMobile(String alternateMobile) {
+        this.alternateMobile = alternateMobile;
+    }
 
-	public String getMobile() {
-		return mobile;
-	}
+    public String getEmergencyContact() {
+        return emergencyContact;
+    }
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    public void setEmergencyContact(String emergencyContact) {
+        this.emergencyContact = emergencyContact;
+    }
 
-	public String getConfirmationToken() {
-		return confirmationToken;
-	}
+    public String getEnabled() {
+        return enabled;
+    }
 
-	public void setConfirmationToken(String confirmationToken) {
-		this.confirmationToken = confirmationToken;
-	}
+    public void setEnabled(String enabled) {
+        this.enabled = enabled;
+    }
 
-	public String getResetToken() {
-		return resetToken;
-	}
+    public String getConfirmationToken() {
+        return confirmationToken;
+    }
 
-	public void setResetToken(String resetToken) {
-		this.resetToken = resetToken;
-	}
+    public void setConfirmationToken(String confirmationToken) {
+        this.confirmationToken = confirmationToken;
+    }
 
-	public String getUserRole() {
-		return userRole;
-	}
+    public Date getCreatedOn() {
+        return createdOn;
+    }
 
-	public void setUserRole(String userRole) {
-		this.userRole = userRole;
-	}
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public Date getLastLogin() {
+        return lastLogin;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
 
-	public List<GrantedAuthority> getGrantedAuthorities() {
-		return grantedAuthorities;
-	}
+    public String getResetToken() {
+        return resetToken;
+    }
 
-	public void setGrantedAuthorities(List<GrantedAuthority> grantedAuthorities) {
-		this.grantedAuthorities = grantedAuthorities;
-	}
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
 
 }

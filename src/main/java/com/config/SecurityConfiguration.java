@@ -1,5 +1,6 @@
 package com.config;
 
+import com.login.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,52 +12,61 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.services.UserService;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	CustomSuccessHandler customSuccessHandler;
+    @Autowired
+    CustomSuccessHandler customSuccessHandler;
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/static*//**").permitAll().antMatchers("/js*//**").permitAll()
-				.antMatchers("/css*//**").permitAll().antMatchers("/resources*//**").permitAll().antMatchers("/reset")
-				.permitAll().antMatchers("/common/forgot").permitAll().antMatchers("/register").permitAll()
-				.antMatchers("/confirm").permitAll().antMatchers("/feedback/").permitAll().antMatchers("/").permitAll().antMatchers("/common/**")
-				.hasAnyRole("ADMIN", "USER", "LEKHPAL").antMatchers("/admin/**").hasRole("ADMIN")
-				.antMatchers("/user/**").hasAnyRole("ADMIN", "USER").antMatchers("/lekhpal/**")
-				.hasAnyRole("ADMIN", "LEKHPAL").anyRequest().authenticated().and().formLogin()
-				.successHandler(customSuccessHandler).loginPage("/common/login").permitAll().and().logout().permitAll().and()
-				.csrf().and().exceptionHandling().accessDeniedPage("/common/accessDenied");
-	}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/bug*//**").permitAll()
+                .antMatchers("/static*//**").permitAll()
+                .antMatchers("/js*//**").permitAll()
+                .antMatchers("/css*//**").permitAll()
+                .antMatchers("/resources*//**").permitAll()
+                .antMatchers("/reset")
+                .permitAll().antMatchers("/common/forgot").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/confirm").permitAll()
+                .antMatchers("/feedback/").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/common/**").hasAnyRole("ADMIN", "TAHSIL_MANTRI", "JILA_MANTRI", "PRADESH_MANTRI")
+                .antMatchers("/mandal/**").hasAnyRole("ADMIN", "TAHSIL_MANTRI", "JILA_MANTRI", "PRADESH_MANTRI")
+                .antMatchers("/tahsil/**").hasAnyRole("ADMIN", "TAHSIL_MANTRI", "JILA_MANTRI", "PRADESH_MANTRI")
+                .antMatchers("/district/**").hasAnyRole("ADMIN", "TAHSIL_MANTRI", "JILA_MANTRI", "PRADESH_MANTRI")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasAnyRole("ADMIN", "RESIDENTS")
+                .antMatchers("/maintenance/**").hasAnyRole("ADMIN", "MAINTENANCE")
+                .anyRequest().authenticated().and().formLogin().successHandler(customSuccessHandler).loginPage("/common/login").permitAll()
+                .and().logout().permitAll().and().csrf().and().exceptionHandling().accessDeniedPage("/common/accessDenied");
+    }
 
-	@Bean
-	public UserDetailsService mongoUserDetails() {
-		return new UserService();
-	}
+    @Bean
+    public UserDetailsService mongoUserDetails() {
+        return new CustomerUserDetailsService();
+    }
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder;
-	}
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		UserDetailsService userDetailsService = mongoUserDetails();
-		auth.userDetailsService(userDetailsService);
-		auth.authenticationProvider(authenticationProvider());
-	}
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        UserDetailsService userDetailsService = mongoUserDetails();
+        auth.userDetailsService(userDetailsService);
+        auth.authenticationProvider(authenticationProvider());
+    }
 
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(mongoUserDetails());
-		authenticationProvider.setPasswordEncoder(passwordEncoder());
-		return authenticationProvider;
-	}
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(mongoUserDetails());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
 
 }

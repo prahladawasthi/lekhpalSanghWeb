@@ -35,7 +35,7 @@ public class FeedServiceImpl implements FeedService {
 
 	@Override
 	public List<Feedback> findAllFeeds() {
-		return (List<Feedback>) feedRepository.findAll();
+		return feedRepository.findAll();
 
 	}
 	

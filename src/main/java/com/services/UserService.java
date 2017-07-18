@@ -1,63 +1,35 @@
 package com.services;
 
-import java.util.Arrays;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.model.User;
 import com.model.UserRoleEnum;
-import com.repository.UserRepository;
 
-@Service("userDetailsService")
-public class UserService implements UserDetailsService {
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private MongoTemplate mongoTemplate;
+public interface UserService {
 
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		return userRepository.findOneByEmail(email);
-	}
+	public Optional<User> findUserByEmail(String email);
 
-	public Object findUserRoles() {
-		return Arrays.asList(UserRoleEnum.values());
-	}
+	public Optional<User> findByConfirmationToken(String confirmationToken);
 
-	public boolean isUserExist(User user) {
-		return ((mongoTemplate.find(
-				Query.query(new Criteria().orOperator(Criteria.where("email").regex(user.getEmail(), "i"))),
-				User.class)).size() > 0) ? true : false;
-	}
+	public Optional<User> findUserByResetToken(String resetToken);
 
-	public Object findAllUsers() {
-		return (List<User>) userRepository.findAll();
-	}
+	public void saveUser(User user);
 
-	public User findByID(String id) {
-		return mongoTemplate.findById(id, User.class);
-	}
+	public String getUserRole(String email);
 
-	public User deleteUserById(String id) {
-		return mongoTemplate.findAndRemove(new Query().addCriteria(Criteria.where("id").is(id)), User.class);
-	}
+	public User deleteUserById(String id);
 
-	public void saveUser(User user) {
-		userRepository.save(user);
-		
-	}
+	public List<User> findAllUsers();
 
-	public User findUserByEmail(String email) {
-		return userRepository.findOneByEmail(email);
-	}	
+	public boolean isUserExist(User user);
+
+	public List<User> find(String text);
+
+	public User findByID(String id);
+
+	public List<UserRoleEnum> findUserRoles();
+
+	public List<User> findAllUsersByRole(String userRole);
+
 }
