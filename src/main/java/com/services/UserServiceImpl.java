@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 		return (List<User>) userRepository.findAll();
 	}
 
-	public boolean isUserExist(User user) {
+	public Boolean isUserExist(User user) {
 		return ((mongoTemplate.find(
 				Query.query(new Criteria().orOperator(Criteria.where("email").regex(user.getEmail(), "i"))),
 				User.class)).size() > 0);

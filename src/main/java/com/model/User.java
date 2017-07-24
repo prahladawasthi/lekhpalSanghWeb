@@ -6,28 +6,28 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Map;
 
 @Document(collection = "user")
 public class User {
 
+    @Field
+    Map<String, String> ratingProvider;
     @Id
     private String id;
-
     @Field
     @Size(min = 3, max = 30)
     private String email;
-
     @Field
     private String password;
-
     @Field
     @Size(min = 3, max = 30)
     private String firstName;
-
     @Field
     @Size(min = 3, max = 30)
     private String lastName;
-
+    @Field
+    private String rating;
     @Field
     private String mandalID;
     @Field
@@ -55,6 +55,22 @@ public class User {
     private String resetToken;
     @Field
     private String userRole;
+
+    public Map<String, String> getRatingProvider() {
+        return ratingProvider;
+    }
+
+    public void setRatingProvider(Map<String, String> ratingProvider) {
+        this.ratingProvider = ratingProvider;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 
     public String getMandalID() {
         return mandalID;

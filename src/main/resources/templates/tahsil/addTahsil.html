@@ -45,9 +45,9 @@
 
             <div class="form-group input-group has-feedback">
 					<span class="input-group-addon"> <span
-                            class="glyphicon glyphicon-user"></span>
+                            class="glyphicon glyphicon-globe"></span>
 					</span> <input type="text" th:field="*{tahsilName}"
-                                   placeholder="First Name" class="form-control" required/> <span
+                                   placeholder="Tahsil Name" class="form-control" required/> <span
                     class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div th:if="${#fields.hasErrors('tahsilName')}"
@@ -56,7 +56,7 @@
 
             <div class="form-group input-group has-feedback">
 					<span class="input-group-addon"> <span
-                            class="glyphicon glyphicon-user"></span>
+                            class="glyphicon glyphicon-globe"></span>
 					</span> <select th:field="*{districtID}" class="form-control" required>
                 <option th:each="district : ${districtList}" th:value="${district.id}"
                         th:text="${district.districtName}"></option>

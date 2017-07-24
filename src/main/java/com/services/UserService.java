@@ -22,7 +22,7 @@ public interface UserService {
 
 	public List<User> findAllUsers();
 
-	public boolean isUserExist(User user);
+	public Boolean isUserExist(User user);
 
 	public List<User> find(String text);
 

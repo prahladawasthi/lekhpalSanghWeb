@@ -30,9 +30,6 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var table = $('#districtListTable').DataTable({
-			rowReorder : {
-				selector : 'td:nth-child(2)'
-			},
 			responsive : true
 		});
 	});
@@ -54,7 +51,7 @@
 	<div class="container">
 
 		<div
-			class=" middle-box text-center loginscreen animated fadeInDowncol-sm-5 ">
+			class=" middle-box text-center loginscreen animated fadeInDown  col-sm-6 col-sm-offset-3">
 
 			<div class="text-left">
 				<br /> <br /> <br /> <br /> <br /> <br />
@@ -67,16 +64,16 @@
 						<tr>
 							<th>District</th>
 							<th>View</th>
-							<th>Update</th>
-							<th>Delete</th>
+							<!--<th>Update</th>
+							<th>Delete</th>-->
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
 							<th>District</th>
 							<th>View</th>
-							<th>Update</th>
-							<th>Delete</th>
+							<!--<th>Update</th>
+							<th>Delete</th>-->
 						</tr>
 					</tfoot>
 					<tbody>
@@ -91,7 +88,7 @@
 										class="btn btn-primary block full-width m-b">View</button>
 								</form>
 							</td>
-							<td>
+							<!--<td>
 								<form class="form-inline" th:action="@{/district/update}"
 									th:object="${district}" method="GET">
 									<input type="hidden" name="id" th:value="${district.id}" />
@@ -106,7 +103,7 @@
 									<button type="submit"
 										class="btn btn-primary block full-width m-b">Delete</button>
 								</form>
-							</td>
+							</td>-->
 						</tr>
 					</tbody>
 				</table>
