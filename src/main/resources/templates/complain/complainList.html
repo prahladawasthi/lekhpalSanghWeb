@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Search Page</title>
+    <title>Complain List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script th:src="@{//code.jquery.com/jquery-1.12.4.js}"></script>
@@ -29,12 +29,14 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            var table = $('#userListTable').DataTable({
+            var table = $('#complainListTable').DataTable({
+                /*rowReorder : {
+                    selector : 'td:nth-child(2)'
+                },*/
                 responsive: true
             });
         });
     </script>
-
 
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -58,49 +60,64 @@
 <div th:replace="fragments/header :: header">...</div>
 <div class="container">
 
-
     <div
             class=" middle-box text-center loginscreen animated fadeInDowncol-sm-5 ">
 
         <div class="text-left">
             <br/> <br/> <br/> <br/> <br/> <br/>
             <div th:if="${message}" class="alert alert-success" role="alert"
-                 th:text="${deletedUser}+ ' ' + ${message}"></div>
-
-            <table id="userListTable" class="table"
-                   cellspacing="0" width="100%">
+                 th:text="${deletedComplain}+ ' ' + ${message}"></div>
+            <table id="complainListTable" class="table" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                 <tr>
-                    <th>Name</th>
-                    <th>Designation</th>
-                    <th>Rating</th>
-                    <th>Appointed At</th>
+                    <th>Subject</th>
+                    <th>Raised By</th>
+                    <th>Raised To</th>
+                    <th>Date</th>
                     <th>View</th>
+
+                    <th
+                            th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Delete
+                    </th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-                    <th>Name</th>
-                    <th>Designation</th>
-                    <th>Rating</th>
-                    <th>Appointed At</th>
+                    <th>Subject</th>
+                    <th>Raised By</th>
+                    <th>Raised To</th>
+                    <th>Date</th>
                     <th>View</th>
 
+                    <th
+                            th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Delete
+                    </th>
                 </tr>
                 </tfoot>
                 <tbody>
-                <tr th:each="user : ${userList}">
-                    <td th:text="${user.firstName}+ ' '+ ${user.lastName}"></td>
-                    <td th:text="${user.designation}"></td>
-                    <td th:text="${user.rating}"></td>
-                    <td th:text="${user.areaAppointedAt}"></td>
+                <tr th:each="complain : ${complainList}">
+                    <td th:text="${complain.complainSubject}"></td>
+                    <td th:text="${complain.complainFrom}"></td>
+                    <td th:text="${complain.complainTo}"></td>
+                    <td th:text="${complain.raisedDate}"></td>
                     <td>
-                        <form class="form-inline" th:action="@{/common/details}"
-                              th:object="${user}" method="GET">
-                            <input type="hidden" name="id" th:value="${user.id}"/>
+                        <form class="form-inline" th:action="@{/complain/viewComplain}"
+                              th:object="${complain}" method="POST">
+                            <input type="hidden" name="id" th:value="${complain.id}"/>
                             <button type="submit"
                                     class="btn btn-primary block full-width m-b">View
+                            </button>
+                        </form>
+                    </td>
+
+                    <td
+                            th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                        <form class="form-inline" th:action="@{/complain/deleteComplain}"
+                              th:object="${complain}" method="POST">
+                            <input type="hidden" name="id" th:value="${complain.id}"/>
+                            <button type="submit"
+                                    class="btn btn-primary block full-width m-b">Delete
                             </button>
                         </form>
                     </td>

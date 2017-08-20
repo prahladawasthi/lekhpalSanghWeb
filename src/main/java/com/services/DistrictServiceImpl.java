@@ -3,6 +3,7 @@ package com.services;
 import com.model.District;
 import com.repository.DistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -33,6 +34,7 @@ public class DistrictServiceImpl implements DistrictService {
     }
 
     @Override
+    @Cacheable("allDistrict")
     public List<District> findAllDistricts() {
         return districtRepository.findAll();
     }

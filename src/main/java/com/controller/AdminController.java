@@ -2,10 +2,7 @@ package com.controller;
 
 import com.model.Tahsil;
 import com.model.User;
-import com.services.DistrictService;
-import com.services.MandalService;
-import com.services.TahsilService;
-import com.services.UserService;
+import com.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -26,9 +23,11 @@ import javax.validation.Valid;
 public class AdminController {
 
     private UserService userService;
+    private EmailService emailService;
     private TahsilService tahsilService;
     private DistrictService districtService;
     private MandalService mandalService;
+
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -44,8 +43,9 @@ public class AdminController {
     private String defaultPassword;
 
     @Autowired
-    public AdminController(UserService userService, MandalService mandalService, DistrictService districtService, TahsilService tahsilService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AdminController(UserService userService, EmailService emailService, MandalService mandalService, DistrictService districtService, TahsilService tahsilService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
+        this.emailService = emailService;
         this.mandalService = mandalService;
         this.districtService = districtService;
         this.tahsilService = tahsilService;
@@ -61,6 +61,7 @@ public class AdminController {
     @RequestMapping(value = "/addUser", method = RequestMethod.GET)
     public ModelAndView addUser(ModelAndView modelAndView) {
         modelAndView.addObject("user", new User());
+        modelAndView.addObject("userDesignation", userService.findUserDesignation());
         modelAndView.addObject("userRoles", userService.findUserRoles());
         modelAndView.addObject("tahsilList", tahsilService.findAllTahsils());
 
@@ -89,6 +90,7 @@ public class AdminController {
                 modelAndView.addObject("message", userAddedSuccessfully);
             }
         }
+        modelAndView.addObject("userDesignation", userService.findUserDesignation());
         modelAndView.addObject("userRoles", userService.findUserRoles());
         modelAndView.addObject("tahsilList", tahsilService.findAllTahsils());
         modelAndView.setViewName("admin/addUser");
@@ -114,9 +116,12 @@ public class AdminController {
         User user = userService.findByID(id);
 
         modelAndView.addObject("user", userService.findByID(id));
-        modelAndView.addObject("mandalName", mandalService.findByID(user.getMandalID()).getMandalName());
-        modelAndView.addObject("districtName", districtService.findByID(user.getDistrictID()).getDistrictName());
-        modelAndView.addObject("tahsilName", tahsilService.findByID(user.getTahsilID()).getTahsilName());
+        if (null != user.getMandalID())
+            modelAndView.addObject("mandalName", mandalService.findByID(user.getMandalID()).getMandalName());
+        if (null != user.getDistrictID())
+            modelAndView.addObject("districtName", districtService.findByID(user.getDistrictID()).getDistrictName());
+        if (null != user.getTahsilID())
+            modelAndView.addObject("tahsilName", tahsilService.findByID(user.getTahsilID()).getTahsilName());
 
         modelAndView.setViewName("admin/userProfile");
 

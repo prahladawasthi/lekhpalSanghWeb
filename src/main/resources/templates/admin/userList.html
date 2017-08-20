@@ -62,8 +62,8 @@
 					<thead>
 						<tr>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
+							<th>Name</th>
+							<th>Designation</th>
 							<th>Ratings</th>
 							<th>Email</th>
 							<th>Role</th>
@@ -74,8 +74,8 @@
 					</thead>
 					<tfoot>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
+							<th>Name</th>
+							<th>Designation</th>
 							<th>Ratings</th>
 							<th>Email</th>
 							<th>Role</th>
@@ -86,8 +86,8 @@
 					</tfoot>
 					<tbody>
 						<tr th:each="user : ${userList}">
-							<td th:text="${user.firstName}"></td>
-							<td th:text="${user.lastName}"></td>
+							<td th:text="${user.firstName}+ ' '+${user.lastName}"></td>
+							<td th:text="${user.designation}"></td>
 							<td th:text="${user.rating}"></td>
 							<td th:text="${user.email}"></td>
 							<td th:text="${user.userRole}"></td>

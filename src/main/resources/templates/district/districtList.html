@@ -63,23 +63,26 @@
 						<tr>
 						<tr>
 							<th>District</th>
+							<th>Magistrate Number</th>
 							<th>View</th>
-							<!--<th>Update</th>
-							<th>Delete</th>-->
+							<th th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Update</th>
+							<!--<th>Delete</th>-->
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
 							<th>District</th>
+							<th>Magistrate Number</th>
 							<th>View</th>
-							<!--<th>Update</th>
-							<th>Delete</th>-->
+							<th th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Update</th>
+							<!--<th>Delete</th>-->
 						</tr>
 					</tfoot>
 					<tbody>
 						<tr th:each="district : ${districtList}">
 							<input type="hidden" name="id" th:value="${district.id}" />
 							<td th:text="${district.districtName}"></td>
+							<td th:text="${district.magistrateNumber}"></td>
 							<td>
 								<form class="form-inline" th:action="@{/district/viewDistrict}"
 									th:object="${district}" method="GET">
@@ -88,7 +91,7 @@
 										class="btn btn-primary block full-width m-b">View</button>
 								</form>
 							</td>
-							<!--<td>
+							<td th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
 								<form class="form-inline" th:action="@{/district/update}"
 									th:object="${district}" method="GET">
 									<input type="hidden" name="id" th:value="${district.id}" />
@@ -96,7 +99,7 @@
 										class="btn btn-primary block full-width m-b">Update</button>
 								</form>
 							</td>
-							<td>
+							<!--<td>
 								<form class="form-inline" th:action="@{/district/delete}"
 									th:object="${district}" method="POST">
 									<input type="hidden" name="id" th:value="${district.id}" />

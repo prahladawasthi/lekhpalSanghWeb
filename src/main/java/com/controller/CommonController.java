@@ -3,6 +3,7 @@ package com.controller;
 import com.login.MongoUserDetails;
 import com.model.Tahsil;
 import com.model.User;
+import com.model.UserRoleEnum;
 import com.services.DistrictService;
 import com.services.MandalService;
 import com.services.TahsilService;
@@ -20,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @PropertySources(value = {@PropertySource("classpath:messages.properties")})
@@ -47,15 +46,69 @@ public class CommonController {
     }
 
     @RequestMapping("/search")
-    public ModelAndView home(ModelAndView modelAndView) {
-        modelAndView.addObject("mandalID", "");
-        modelAndView.addObject("districtID", "");
-        modelAndView.addObject("tahsilID", "");
-        modelAndView.addObject("userList", userService.findAllUsers());
-        modelAndView.addObject("mandalList", mandalService.findAllMandals());
-        modelAndView.addObject("districtList", districtService.findAllDistricts());
-        modelAndView.addObject("tahsilList", tahsilService.findAllTahsils());
+    public ModelAndView search(ModelAndView modelAndView) {
+        List<User> userList = new ArrayList();
+
+        userList.addAll(userService.findAllUsersByRole(UserRoleEnum.ROLE_LEKHPAL.toString()));
+        userList.addAll(userService.findAllUsersByRole(UserRoleEnum.ROLE_JILA_MANTRI.toString()));
+        userList.addAll(userService.findAllUsersByRole(UserRoleEnum.ROLE_TAHSIL_MANTRI.toString()));
+        userList.addAll(userService.findAllUsersByRole(UserRoleEnum.ROLE_PRADESH_MANTRI.toString()));
+
+        modelAndView.addObject("userList", userList);
         modelAndView.setViewName("common/search");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/lekhpalSearch", method = RequestMethod.GET)
+    public ModelAndView lekhpalSearch(ModelAndView modelAndView) {
+        modelAndView.setViewName("common/lekhpalSearch");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/lekhpalSearch", method = RequestMethod.POST)
+    public ModelAndView lekhpalSearch(ModelAndView modelAndView, @RequestParam String search) {
+
+        List<User> userList = new ArrayList<>();
+        modelAndView.setViewName("common/lekhpalSearch");
+
+        if (null == search || search.equalsIgnoreCase("")) {
+            modelAndView.addObject("message", "Please provide some input");
+            return modelAndView;
+        }
+
+        userList = userService.findLekhpal(search);
+        if (null == userList || !(userList.size() > 0)) {
+            modelAndView.addObject("message", "Lekhpal does not exist");
+            return modelAndView;
+        }
+        modelAndView.addObject("userList", userList);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/villageSearch", method = RequestMethod.GET)
+    public ModelAndView villageSearch(ModelAndView modelAndView) {
+        modelAndView.setViewName("common/villageSearch");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/villageSearch", method = RequestMethod.POST)
+    public ModelAndView villageSearch(ModelAndView modelAndView, @RequestParam String search) {
+
+        List<User> userList = new ArrayList<>();
+        modelAndView.setViewName("common/villageSearch");
+        if (null == search || search.equalsIgnoreCase("")) {
+            modelAndView.addObject("message", "Please provide some input");
+            return modelAndView;
+        }
+
+        userList = userService.findVillage(search);
+        if (null == userList || !(userList.size() > 0)) {
+            modelAndView.addObject("message", "Village does not exist");
+            return modelAndView;
+        }
+        modelAndView.addObject("userList", userList);
+
         return modelAndView;
     }
 
@@ -161,6 +214,7 @@ public class CommonController {
     public ModelAndView updateUser(ModelAndView modelAndView, @RequestParam String id) {
         User user = userService.findByID(id);
         modelAndView.addObject("user", user);
+        modelAndView.addObject("userDesignation", userService.findUserDesignation());
         modelAndView.addObject("userRoles", userService.findUserRoles());
         modelAndView.addObject("tahsilList", tahsilService.findAllTahsils());
         modelAndView.setViewName("admin/updateUser");
@@ -177,7 +231,7 @@ public class CommonController {
             userService.saveUser(user);
             modelAndView.addObject("message", userUpdatedSuccessfully);
         }
-
+        modelAndView.addObject("userDesignation", userService.findUserDesignation());
         modelAndView.addObject("userRoles", userService.findUserRoles());
         modelAndView.addObject("tahsilList", tahsilService.findAllTahsils());
         modelAndView.setViewName("admin/updateUser");

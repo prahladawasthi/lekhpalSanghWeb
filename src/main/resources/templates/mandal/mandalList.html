@@ -40,8 +40,8 @@
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
             a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0];
             a.async = 1;
@@ -61,7 +61,7 @@
     <div
             class=" middle-box text-center loginscreen animated fadeInDown col-sm-6 col-sm-offset-3 ">
 
-        <div class="text-center">
+        <div class="text-left">
             <br/> <br/> <br/> <br/> <br/> <br/>
             <div th:if="${message}" class="alert alert-success" role="alert"
                  th:text="${deletedMandal}+ ' ' + ${message}"></div>
@@ -72,16 +72,18 @@
                 <tr>
                     <!--<th>ID</th>-->
                     <th>Mandal</th>
-                    <!--<th>Update</th>
-                    <th>Delete</th>-->
+                    <th>Commissioner Number</th>
+                    <th th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Update</th>
+                    <!--<th>Delete</th>-->
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
                     <!--<th>ID</th>-->
                     <th>Mandal</th>
-                    <!--<th>Update</th>
-                    <th>Delete</th>-->
+                    <th>Commissioner Number</th>
+                    <th th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Update</th>
+                    <!--<th>Delete</th>-->
                 </tr>
                 </tfoot>
                 <tbody>
@@ -89,7 +91,8 @@
                     <input type="hidden" name="id" th:value="${mandal.id}"/>
                     <!--<td th:text="${mandal.id}"></td>-->
                     <td th:text="${mandal.mandalName}"></td>
-                   <!-- <td>
+                    <td th:text="${mandal.commissionerNumber}"></td>
+                    <td th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                         <form class="form-inline" th:action="@{/mandal/update}"
                               th:object="${mandal}" method="GET">
                             <input type="hidden" name="id" th:value="${mandal.id}"/>
@@ -98,15 +101,15 @@
                             </button>
                         </form>
                     </td>
-                    <td>
-                        <form class="form-inline" th:action="@{/mandal/delete}"
-                              th:object="${mandal}" method="POST">
-                            <input type="hidden" name="id" th:value="${mandal.id}"/>
-                            <button type="submit"
-                                    class="btn btn-primary block full-width m-b">Delete
-                            </button>
-                        </form>
-                    </td>-->
+                    <!--  <td>
+                          <form class="form-inline" th:action="@{/mandal/delete}"
+                                th:object="${mandal}" method="POST">
+                              <input type="hidden" name="id" th:value="${mandal.id}"/>
+                              <button type="submit"
+                                      class="btn btn-primary block full-width m-b">Delete
+                              </button>
+                          </form>
+                      </td>-->
                 </tr>
                 </tbody>
             </table>

@@ -3,6 +3,7 @@ package com.services;
 import com.model.Mandal;
 import com.repository.MandalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -34,6 +35,7 @@ public class MandalServiceImpl implements MandalService {
     }
 
     @Override
+    @Cacheable("allMandal")
     public List<Mandal> findAllMandals() {
         return mandalRepository.findAll();
     }

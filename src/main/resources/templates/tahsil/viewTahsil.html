@@ -59,6 +59,18 @@
                 <td th:text="${tahsil.tahsilName}"></td>
             </tr>
             <tr>
+                <td>SDM Number</td>
+                <td th:text="${tahsil.SDMNumber}"></td>
+            </tr>
+            <tr>
+                <td>Tahsildaar Number</td>
+                <td th:text="${tahsil.tahsildaarNumber}"></td>
+            </tr>
+            <tr>
+                <td>Naib Tahsildaar Number</td>
+                <td th:text="${tahsil.naibNahsildaarNumber}"></td>
+            </tr>
+            <tr>
                 <td>Mandal Name</td>
                 <td th:text="${mandalName}"></td>
             </tr>
@@ -66,7 +78,7 @@
                 <td>District Name</td>
                 <td th:text="${districtName}"></td>
             </tr>
-            <tr th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))}">
+            <tr th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
                 <td align="center">
                     <form class="form-inline" th:action="@{/tahsil/update}"
                           th:object="${tahsil}" method="GET">
@@ -81,8 +93,9 @@
                 </a>
                 </td>
             </tr>
-            <tr th:if="!${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))}">
-                <td align="center"><a th:href="@{/tahsil/}">
+
+            <tr th:if="!${(#authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
+                <td align="center" colspan="2"><a th:href="@{/tahsil/}">
                     <button type="submit" class="btn btn-primary block full-width m-b">Back</button>
                 </a>
                 </td>

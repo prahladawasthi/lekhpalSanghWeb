@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:th="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-	<script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
         ga('create', 'UA-102021176-1', 'auto');
         ga('send', 'pageview');
 
-	</script>
+    </script>
 </head>
 <body>
-	<div th:fragment="footer">
-		&copy; 2017 NetSolutions
-		<hr />
-		This application is in testing. <br/>We are fixing bug and integrating any suggestion provided by user.
-		<hr />
-		Please provide your feedback and suggestion<a
-			href="/feedback/"><br/><button type="submit"
-					class="btn btn-primary block full-width m-b">Feedback</button></strong></a>
-	</div>
+<div align="center" th:fragment="footer">
+    &copy; 2017 NetSolutions<br/><br/>
+    <!-- Begin BidVertiser code -->
+    <SCRIPT data-cfasync="false" SRC="//bdv.bidvertiser.com/BidVertiser.dbm?pid=780916&bid=1900772"
+            TYPE="text/javascript"></SCRIPT>
+    <!-- End BidVertiser code -->  <br/><br/><br/><br/><br/><br/>
+
+    <!--Please provide your feedback and suggestion<a
+        href="/feedback/"><br/><button type="submit"
+                class="btn btn-primary block full-width m-b">Feedback</button></strong></a>-->
+</div>
 </body>
 </html>

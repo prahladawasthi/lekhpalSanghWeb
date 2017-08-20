@@ -46,9 +46,26 @@
                         href="#" th:href="@{/register}">Register</a></li>
             </ul>
 
+
             <ul class="nav navbar-nav">
-                <li th:classappend="${module == 'search' ? 'active' : ''}"><a
-                        href="#" th:href="@{/common/search}">Search</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Search<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+
+                        <li th:classappend="${module == 'user' ? 'active' : ''}"><a
+                                href="#" th:href="@{/common/search}">Search</a></li>
+
+                        <li th:classappend="${module == 'user' ? 'active' : ''}"><a
+                                href="#" th:href="@{/common/lekhpalSearch}">Lekhpal Search</a></li>
+
+                        <li th:classappend="${module == 'user' ? 'active' : ''}"><a
+                                href="#" th:href="@{/common/villageSearch}">Village Search</a></li>
+
+                    </ul>
+                </li>
+                <!--<li th:classappend="${module == 'search' ? 'active' : ''}"><a
+                        href="#" th:href="@{/common/search}">Search</a></li>-->
                 <li th:classappend="${module == 'search' ? 'active' : ''}"><a
                         href="#" th:href="@{/mandal/}">Mandal List</a></li>
                 <li th:classappend="${module == 'search' ? 'active' : ''}"><a
@@ -62,10 +79,6 @@
 
                 <li th:classappend="${module == 'add' ? 'active' : ''}"><a
                         href="#" th:href="@{/common/profile}">Profile</a></li>
-
-                <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-                    th:classappend="${module == 'feedback' ? 'active' : ''}"><a
-                        href="#" th:href="@{/feedback/feedList}">Feedback</a></li>
 
                 <!-- Admin Navigation -->
 
@@ -87,6 +100,40 @@
 
                     </ul>
                 </li>
+
+                <li class="dropdown" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Feedback<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+
+                        <li th:classappend="${module == 'feedback' ? 'active' : ''}"><a
+                                href="#" th:href="@{/feedback/feedList}">Feedback List</a></li>
+
+                        <li th:classappend="${module == 'feedback' ? 'active' : ''}"><a
+                                href="#" th:href="@{/feedback/}">Feedback</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Complains<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+
+                        <li th:classappend="${module == 'complain' ? 'active' : ''}"><a
+                                href="#" th:href="@{/complain/complainList}">Complain List</a></li>
+                        <li th:classappend="${module == 'complain' ? 'active' : ''}"><a
+                                href="#" th:href="@{/complain/}">Complain</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav" th:if="!${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                <li th:classappend="${module == 'feedback' ? 'active' : ''}"><a
+                        href="#" th:href="@{/feedback/}">Feedback</a></li>
+                <li th:classappend="${module == 'complain' ? 'active' : ''}"><a
+                        href="#" th:href="@{/complain/}">Complain</a></li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right"

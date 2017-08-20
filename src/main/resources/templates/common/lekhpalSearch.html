@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Search Page</title>
+    <title>Lekhpal Search</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script th:src="@{//code.jquery.com/jquery-1.12.4.js}"></script>
@@ -65,9 +65,28 @@
         <div class="text-left">
             <br/> <br/> <br/> <br/> <br/> <br/>
             <div th:if="${message}" class="alert alert-success" role="alert"
-                 th:text="${deletedUser}+ ' ' + ${message}"></div>
+                 th:text="${message}"></div>
 
-            <table id="userListTable" class="table"
+            <div align="center"><!--
+                <h1>Search for Lekhpal</h1>
+                &lt;!&ndash; <div class="col-md-12"> &ndash;&gt;
+                <form class="form-inline" th:action="@{/common/lekhpalSearch}" method="POST">
+                    <input type="text" name="search" id="search" th:value="${search}"
+                           class="form-control" /> <input type="submit" value="Search"
+                                                          class="form-control" />
+                </form>-->
+
+                <h4 align="center">Lekhpal Search</h4>
+                <form action="#" th:action="@{/common/lekhpalSearch}"
+                      method="POST">
+                    <input type="text" th:name="search"
+                           placeholder="Enter lekhpal to search "/>
+
+                    <button type="submit" class="btn btn-primary block full-width m-b">Submit</button>
+                </form>
+            </div>
+
+            <table th:if="${userList}" id="userListTable" class="table"
                    cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -108,6 +127,7 @@
                 </tbody>
             </table>
         </div>
+        <br/><br/>
         <div align="center" th:replace="fragments/footer :: footer">&copy;
             2017 Lekhpal Sangh
         </div>

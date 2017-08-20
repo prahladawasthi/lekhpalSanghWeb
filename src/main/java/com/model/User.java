@@ -5,11 +5,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
 @Document(collection = "user")
-public class User {
+public class User implements Serializable{
 
     @Field
     Map<String, String> ratingProvider;
@@ -26,6 +27,8 @@ public class User {
     @Field
     @Size(min = 3, max = 30)
     private String lastName;
+    @Field
+    private String designation;
     @Field
     private String rating;
     @Field
@@ -55,6 +58,14 @@ public class User {
     private String resetToken;
     @Field
     private String userRole;
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
 
     public Map<String, String> getRatingProvider() {
         return ratingProvider;

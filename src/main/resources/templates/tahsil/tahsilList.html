@@ -59,7 +59,7 @@
 <div class="container">
 
     <div
-            class=" middle-box text-center loginscreen animated fadeInDown col-sm-6 col-sm-offset-3 ">
+            class="middle-box text-center loginscreen animated fadeInDowncol-sm-5">
 
         <div class="text-left">
             <br/> <br/> <br/> <br/> <br/> <br/>
@@ -71,11 +71,14 @@
                 <tr>
                 <tr>
                     <th>Tahsil Name</th>
+                    <th>SDM Number</th>
+                    <th>Tahsildaar Number</th>
+                    <th>Naib Tahsildaar Number</th>
                     <th>View</th>
-                    <th th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))  or (#authorization.expression('hasRole(''ROLE_LEKHPAL'')'))}">
+                    <th th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
                         Update
                     </th>
-                    <th th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))  or (#authorization.expression('hasRole(''ROLE_LEKHPAL'')'))}">
+                    <th th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
                         Delete
                     </th>
                 </tr>
@@ -83,11 +86,14 @@
                 <tfoot>
                 <tr>
                     <th>Tahsil Name</th>
+                    <th>SDM Number</th>
+                    <th>Tahsildaar Number</th>
+                    <th>Naib Tahsildaar Number</th>
                     <th>View</th>
-                    <th th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))  or (#authorization.expression('hasRole(''ROLE_LEKHPAL'')'))}">
+                    <th th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
                         Update
                     </th>
-                    <th th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))  or (#authorization.expression('hasRole(''ROLE_LEKHPAL'')'))}">
+                    <th th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
                         Delete
                     </th>
                 </tr>
@@ -96,6 +102,9 @@
                 <tr th:each="tahsil : ${tahsilList}">
 
                     <td th:text="${tahsil.tahsilName}"></td>
+                    <td th:text="${tahsil.SDMNumber}"></td>
+                    <td th:text="${tahsil.tahsildaarNumber}"></td>
+                    <td th:text="${tahsil.naibNahsildaarNumber}"></td>
 
                     <input type="hidden" name="id" th:value="${tahsil.id}"/>
                     <input type="hidden" name="mandalID" th:value="${tahsil.mandalID}"/>
@@ -109,7 +118,7 @@
                             </button>
                         </form>
                     </td>
-                    <td th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))  or (#authorization.expression('hasRole(''ROLE_LEKHPAL'')'))}">
+                    <td th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
                         <form class="form-inline" th:action="@{/tahsil/update}"
                               th:object="${tahsil}" method="GET">
                             <input type="hidden" name="id" th:value="${tahsil.id}"/>
@@ -118,7 +127,7 @@
                             </button>
                         </form>
                     </td>
-                    <td th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')')) or  (#authorization.expression('hasRole(''ROLE_TAHSIL_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_JILA_MANTRI'')')) or  (#authorization.expression('hasRole(''ROLE_PRADESH_MANTRI'')'))  or (#authorization.expression('hasRole(''ROLE_LEKHPAL'')'))}">
+                    <td th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
                         <form class="form-inline" th:action="@{/tahsil/delete}"
                               th:object="${tahsil}" method="POST">
                             <input type="hidden" name="id" th:value="${tahsil.id}"/>

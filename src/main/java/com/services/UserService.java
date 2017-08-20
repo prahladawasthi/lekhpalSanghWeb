@@ -1,35 +1,43 @@
 package com.services;
 
+import com.model.User;
+import com.model.UserDesignationEnum;
+import com.model.UserRoleEnum;
+
 import java.util.List;
 import java.util.Optional;
 
-import com.model.User;
-import com.model.UserRoleEnum;
-
 public interface UserService {
 
-	public Optional<User> findUserByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 
-	public Optional<User> findByConfirmationToken(String confirmationToken);
+    Optional<User> findUserByMobile(String mobile);
 
-	public Optional<User> findUserByResetToken(String resetToken);
+    Optional<User> findByConfirmationToken(String confirmationToken);
 
-	public void saveUser(User user);
+    Optional<User> findUserByResetToken(String resetToken);
 
-	public String getUserRole(String email);
+    void saveUser(User user);
 
-	public User deleteUserById(String id);
+    String getUserRole(String emailOrMobile);
 
-	public List<User> findAllUsers();
+    User deleteUserById(String id);
 
-	public Boolean isUserExist(User user);
+    List<User> findAllUsers();
 
-	public List<User> find(String text);
+    Boolean isUserExist(User user);
 
-	public User findByID(String id);
+    List<User> find(String text);
 
-	public List<UserRoleEnum> findUserRoles();
+    User findByID(String id);
 
-	public List<User> findAllUsersByRole(String userRole);
+    List<UserRoleEnum> findUserRoles();
 
+    List<UserDesignationEnum> findUserDesignation();
+
+    List<User> findAllUsersByRole(String userRole);
+
+    List<User> findLekhpal(String search);
+
+    List<User> findVillage(String search);
 }
